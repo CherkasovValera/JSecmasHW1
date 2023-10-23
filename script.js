@@ -23,13 +23,13 @@ function createCounter() {
   };
 }
 
-const counter1 = createCounter();
-console.log(counter1.increment());
-console.log(counter1.increment());
+const counterInc = createCounter();
+console.log(counterInc.increment());
+console.log(counterInc.increment());
 
-const counter2 = createCounter();
-console.log(counter2.decrement());
-console.log(counter2.decrement());
+const counterDec = createCounter();
+console.log(counterDec.decrement());
+console.log(counterDec.decrement());
 
 // 3) Дополнительное задание, выполняем только если проходили работу с DOM.
 // Напишите рекурсивную функцию findElementByClass, которая принимает корневой
@@ -37,13 +37,26 @@ console.log(counter2.decrement());
 // найденный элемент с указанным классом в этом дереве.
 
 // Пример
-// function findElementByClass(root) {
-//     if (root ===1){
-//         return root;
-//     }
-//     return findElementByClass(root - 1) * root;
-// }
+let serchElement = [];
+function findElementByClass(rootElem, classElem) {
+    if (rootElem.hasChildNodes()){
+        for (let e of rootElem.children){
+            if (e.className === classElem) {
+                serchElement.push(e);
+                if (serchElement[0].className !== classElem){
+                    serchElement = [];
+                    serchElement.push(e);
+                }                
+            }
+            findElementByClass(e, classElem)
+        }
+        return serchElement[0];
+    }
+    return findElementByClass(root - 1) * root;
+}
 
-// const rootElement = document.getElementById('root');
-// const targetElement = findElementByClass(rootElement, 'my-class');
-// console.log(targetElement);
+
+
+const rootElement = document.getElementById('root');
+const targetElement = findElementByClass(rootElement, 'my-class');
+console.log(targetElement);
